@@ -2,6 +2,13 @@
     <video autoplay muted loop plays-inline id="myVideo">
       <source src="bg-video.mp4" type="video/mp4">
     </video>
+    <div class="box" id="intro">
+
+      <h2>Welcome to your ToDoList !</h2>
+     
+      <p>Hit the + button to add a new item</p>
+      <p>Check the checkbox to delete an item</p>
+    </div>
     <div class="box" id="heading">
       <img src="todo.png" >
       <h1>
@@ -10,18 +17,22 @@
     </div>
 
     <div class="box">
-      <% for(var i=0;i<newListItems.length;i++){ %>
+
+      <% newListItems.forEach(function(item){ %>
+        <form action="/delete" method="post">
         <div class="item">
-          <input type="checkbox">
+          <input type="checkbox" name="checkbox" value="<%=item._id %>" onChange="this.form.submit()">
           <p>
-            <%= newListItems[i] %>
+            <%= item.name %>
           </p>
         </div>
-        <% } %>
+        <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+        </form>
+      <% }) %>
 
           <form class="item" action="/" method="post">
             <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
-            <button type="submit" name="list" value=<%=listTitle %>>+</button>
+            <button type="submit" name="list" value="<%=listTitle %>">+</button>
           </form>
     </div>
 
